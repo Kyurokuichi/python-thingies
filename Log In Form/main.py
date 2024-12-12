@@ -121,8 +121,8 @@ def loadWindow():
     global entryUsername
     entryUsername = Entry(window)
     entryUsername.insert(0, "Username")
-    # entryUsername.bind("<FocusIn>", entryUsernameEvent)
-    # entryUsername.bind("<FocusOut>", entryUsernameEvent)
+    entryUsername.bind("<FocusIn>", entryUsernameEvent)
+    entryUsername.bind("<FocusOut>", entryUsernameEvent)
     entryUsername.config(width=28, borderwidth=8, relief=FLAT, font=("Arial", 16), fg="#888583")
     entryUsername.place(x=0, y=0)
     window.update()
@@ -131,8 +131,8 @@ def loadWindow():
     global entryPassword
     entryPassword = Entry(window)
     entryPassword.insert(0, "Password")
-    # entryPassword.bind("<FocusIn>", entryPasswordEvent)
-    # entryPassword.bind("<FocusOut>", entryPasswordEvent)
+    entryPassword.bind("<FocusIn>", entryPasswordEvent)
+    entryPassword.bind("<FocusOut>", entryPasswordEvent)
     entryPassword.config(width=28, borderwidth=8, relief=FLAT, font=("Arial", 16), fg="#888583")
     entryPassword.place(x=0, y=0)
     window.update()
@@ -140,7 +140,7 @@ def loadWindow():
 
     buttonSignIn = Button(window)
     buttonSignIn.config (width=28, borderwidth=4, relief=FLAT, font=("Arial", 16), text="Sign In", fg="#FFFFFF", bg="#70C5C0")
-    # buttonSignIn.bind("<Button>", signIn)
+    buttonSignIn.bind("<Button>", signIn)
     buttonSignIn.place(x=0, y=0)
     window.update()
     buttonSignIn.place(x=(256-buttonSignIn.winfo_width()/2), y=360)
@@ -151,7 +151,7 @@ def loadWindow():
 
     buttonForgotPassword = Button(window)
     buttonForgotPassword.config(font=("Arial", 11, "underline"), text="Forgot Password?", relief=FLAT, fg="#888583", bg="#ECECEC")
-    # buttonForgotPassword.bind("<Button>", forgotPassword)
+    buttonForgotPassword.bind("<Button>", forgotPassword)
     buttonForgotPassword.place(x=0, y=0)
     window.update()
     buttonForgotPassword.place(x=432-buttonForgotPassword.winfo_width(), y=432)
@@ -162,7 +162,7 @@ def loadWindow():
 
     buttonSignUp = Button(window)
     buttonSignUp.config(relief=FLAT, font=("Arial", 10, "underline"), text="Sign Up", fg="#FFFFFF", bg="#C86F70")
-    # buttonSignUp.bind("<Button>", signUp)
+    buttonSignUp.bind("<Button>", signUp)
     buttonSignUp.place(x=0, y=0)
 
     window.update()
