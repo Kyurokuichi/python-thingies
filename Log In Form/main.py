@@ -1,5 +1,56 @@
+# SQL
+from mysql import connector
+# GUI
 from tkinter import *
 from tkinter import messagebox
+
+
+# SQL Function for initializing the MySQL Database and its cursor
+def loadDatabase():
+    global database, cursor
+
+    database = connector.connect(
+        host = "localhost",
+        user = "LogInForm",
+        passwd = "8NtJ.Js)AIA1Q@IL",
+    )
+
+    cursor = database.cursor()
+    cursor.execute("CREATE DATABASE IF NOT EXISTS account")
+    cursor.execute("USE account")
+    cursor.execute("CREATE TABLE IF NOT EXISTS user (name VARCHAR(255), password VARCHAR(255))")
+
+def checkAccount(username, password):
+    if username.strip() == "Username" and password.strip() == "Password":
+        return "Both Username and Password is empty."
+    elif username.strip() == "Username":
+        return "Username is empty."
+    elif password.strip() == "Password":
+        return "Password is empty."
+
+    filterAccounts = "SELECT * FROM user WHERE name = %s OR password = %s"
+    cursor.execute(filterAccounts, (username, password,))
+
+    status = False
+    result = cursor.fetchall()
+    resultUsername = None
+    resultPassword = None
+    for account in result:
+        status = True
+        resultUsername = account[0]
+        resultPassword = account[1]
+    
+    if status == True:
+        if username == resultUsername and password == resultPassword:
+            return "Login Successful!"
+        elif username != resultUsername and password == resultPassword:
+            return "Username is incorrect!"
+        elif username == resultUsername and password != resultPassword:
+            return "Password is incorrect!"
+        else:
+            return "Both Username and Password are incorrect!"
+    else:
+        return "Account does not exist!"
 
 '''
     Main window Event Functions
@@ -64,25 +115,20 @@ def signInFailed(message, showIncorrects):
 
 noOfIncorrects = 0 # Tracks incorrect attempts
 def signIn(event):
-    global uname, pword, noOfIncorrects, entryUsername, entryPassword
-
-    username = entryUsername.get()
-    password = entryPassword.get()
+    global noOfIncorrects
 
     if noOfIncorrects < 3:
-        if username == uname and password == pword:
+        status = checkAccount(entryUsername.get(), entryPassword.get())
+
+        if status == "Login Successful!":
             displayApp()
         else:
-            if username == "Username" and password == "Password":
-                signInFailed("Username and Password has left blank.", False)
-            elif username != uname and password == pword:
-                signInFailed("Username is incorrect", True)
-                noOfIncorrects += 1
-            elif username == uname and password != pword:
-                signInFailed("Password is incorrect", True)
-                noOfIncorrects += 1
+            if (status == "Both Username and Password is empty." or
+                status == "Username is empty." or
+                status == "Password is empty."):
+                signInFailed(status, False)
             else:
-                signInFailed("Username and Password is both incorrect", True)
+                signInFailed(status, True)
                 noOfIncorrects += 1
     else:
         messagebox.showerror("Unable to Sign In", "You have reached the maximum Sign In attempts")
@@ -170,6 +216,7 @@ def loadWindow():
     buttonSignUp.place(x=(256-(labelSignUp.winfo_width()-buttonSignUp.winfo_width())/2+labelSignUp.winfo_width()), y=524)
 
 def load():
+    loadDatabase()
     loadWindow()
 
 def main():

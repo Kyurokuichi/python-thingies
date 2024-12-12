@@ -31,7 +31,7 @@ logInFormAccount.cursor.execute(insertAccount, account)
 logInFormAccount.database.commit()
 print(logInFormAccount.cursor.rowcount, "record inserted.")
 
-logInFormAccount.execute("SELECT * FROM user WHERE name = 'Roblox'")
+logInFormAccount.execute("SELECT * FROM user")
 result = logInFormAccount.cursor.fetchall()
 
 for s in result:
