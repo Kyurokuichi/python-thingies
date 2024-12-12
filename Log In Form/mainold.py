@@ -1,9 +1,7 @@
-from tkinter import *
+import tkinter as tk
 from tkinter import messagebox
 
-'''
-    Main window Event Functions
-'''
+
 
 def entryUsernameEvent(event):
     global entryUsername
@@ -39,18 +37,14 @@ def entryPasswordEvent(event):
 uname = "admin"
 pword = "1234567890"
 
-'''
-    App window Event Functions
-'''
-
 def displayApp():
     global uname
 
-    appWindow = Toplevel()
+    appWindow = tk.Toplevel()
     appWindow.title("App")
     appWindow.geometry("480x480")
 
-    labelHomeTitle = Label(appWindow)
+    labelHomeTitle = tk.Label(appWindow)
     labelHomeTitle.config(text="Hello " + uname + "! Welcome back!")
     labelHomeTitle.pack()
 
@@ -94,88 +88,90 @@ def forgotPassword(event):
 def signUp(event):
     messagebox.showinfo("Sign Up Request", "You may need to contact the administrator in order to create an account.")
 
-def loadWindow():
+def load():
     global window
-    window = Tk()
+    window = tk.Tk()
     window.title("Log In Form")
     window.geometry("512x576")
     window.config(background="#C86F70")
 
-    frameBG = Frame(window)
+    frameBG = tk.Frame(window)
     frameBG.config(background="#ECECEC", width=448, height=428)
-    frameBG.place(x=32, y=48)
+    frameBG.place(x=(512-448)/2, y=(576-448)/2+16)
 
     global imageProfile
-    imageProfile = PhotoImage(file="profile.png").subsample(2,2)
+    imageProfile = tk.PhotoImage(file="profile.png").subsample(2,2)
 
-    labelProfile = Label(window)
+    labelProfile = tk.Label(window)
     labelProfile.config(image=imageProfile, bg="white")
-    labelProfile.place(x=197, y=18)
+    labelProfile.place(x=(512-236/2)/2, y=(576-448-236/2+8)/2)
 
-    labelTitle = Label(window)
+    global labelTitle
+    labelTitle = tk.Label(window)
     labelTitle.config(text="Member Login", font=("Arial", 20), fg="#888583", bg="#ECECEC") 
     labelTitle.place(x=0, y=0)
     window.update()
-    labelTitle.place(x=(256-labelTitle.winfo_width()/2), y=168)
+    labelTitle.place(x=(512-labelTitle.winfo_width())/2, y=128+32+8)
 
     global entryUsername
-    entryUsername = Entry(window)
+    entryUsername = tk.Entry(window)
     entryUsername.insert(0, "Username")
-    # entryUsername.bind("<FocusIn>", entryUsernameEvent)
-    # entryUsername.bind("<FocusOut>", entryUsernameEvent)
-    entryUsername.config(width=28, borderwidth=8, relief=FLAT, font=("Arial", 16), fg="#888583")
+    entryUsername.bind("<FocusIn>", entryUsernameEvent)
+    entryUsername.bind("<FocusOut>", entryUsernameEvent)
+    entryUsername.config(width=28, borderwidth=8, relief=tk.FLAT, font=("Arial", 16), fg="#888583")
     entryUsername.place(x=0, y=0)
     window.update()
-    entryUsername.place(x=(256-entryUsername.winfo_width()/2), y=232)
+    entryUsername.place(x=(512-entryUsername.winfo_width())/2, y=128+64+32+8)
 
     global entryPassword
-    entryPassword = Entry(window)
+    entryPassword = tk.Entry(window)
     entryPassword.insert(0, "Password")
-    # entryPassword.bind("<FocusIn>", entryPasswordEvent)
-    # entryPassword.bind("<FocusOut>", entryPasswordEvent)
-    entryPassword.config(width=28, borderwidth=8, relief=FLAT, font=("Arial", 16), fg="#888583")
+    entryPassword.bind("<FocusIn>", entryPasswordEvent)
+    entryPassword.bind("<FocusOut>", entryPasswordEvent)
+    entryPassword.config(width=28, borderwidth=8, relief=tk.FLAT, font=("Arial", 16), fg="#888583")
     entryPassword.place(x=0, y=0)
     window.update()
-    entryPassword.place(x=(256-entryPassword.winfo_width()/2), y=296)
+    entryPassword.place(x=(512-entryPassword.winfo_width())/2, y=256+32+8)
 
-    buttonSignIn = Button(window)
-    buttonSignIn.config (width=28, borderwidth=4, relief=FLAT, font=("Arial", 16), text="Sign In", fg="#FFFFFF", bg="#70C5C0")
-    # buttonSignIn.bind("<Button>", signIn)
+    global buttonSignIn
+    buttonSignIn = tk.Button(window)
+    buttonSignIn.config (width=28, borderwidth=4, relief=tk.FLAT, font=("Arial", 16), text="Sign In", fg="#FFFFFF", bg="#70C5C0")
+    buttonSignIn.bind("<Button>", signIn)
     buttonSignIn.place(x=0, y=0)
     window.update()
-    buttonSignIn.place(x=(256-buttonSignIn.winfo_width()/2), y=360)
+    buttonSignIn.place(x=(512-buttonSignIn.winfo_width())/2, y=256+64+32+8)
 
-    checkButtonRemember = Checkbutton(window)
-    checkButtonRemember.config(font=("Arial", 11), text="Remember Me", relief=FLAT, fg="#888583", bg="#ECECEC")
-    checkButtonRemember.place(x=76, y=432)
+    global checkButtonRemember
+    checkButtonRemember = tk.Checkbutton(window)
+    checkButtonRemember.config(font=("Arial", 11), text="Remember Me", relief=tk.FLAT, fg="#888583", bg="#ECECEC")
+    checkButtonRemember.place(x=64+8+4, y=256+128+32+16)
 
-    buttonForgotPassword = Button(window)
-    buttonForgotPassword.config(font=("Arial", 11, "underline"), text="Forgot Password?", relief=FLAT, fg="#888583", bg="#ECECEC")
-    # buttonForgotPassword.bind("<Button>", forgotPassword)
+    global buttonForgotPassword
+    buttonForgotPassword = tk.Button(window)
+    buttonForgotPassword.config(font=("Arial", 11, "underline"), text="Forgot Password?", relief=tk.FLAT, fg="#888583", bg="#ECECEC")
+    buttonForgotPassword.bind("<Button>", forgotPassword)
     buttonForgotPassword.place(x=0, y=0)
     window.update()
-    buttonForgotPassword.place(x=432-buttonForgotPassword.winfo_width(), y=432)
+    buttonForgotPassword.place(x=512-64-16-buttonForgotPassword.winfo_width(), y=256+128+32+16)
 
-    labelSignUp = Label(window)
+    global labelSignUp
+    labelSignUp = tk.Label(window)
     labelSignUp.config(borderwidth=4 ,font=("Arial", 10), text="Don't have an account?", fg="#FFFFFF", bg="#C86F70")
     labelSignUp.place(x=0, y=0)
 
-    buttonSignUp = Button(window)
-    buttonSignUp.config(relief=FLAT, font=("Arial", 10, "underline"), text="Sign Up", fg="#FFFFFF", bg="#C86F70")
-    # buttonSignUp.bind("<Button>", signUp)
+    global buttonSignUp
+    buttonSignUp = tk.Button(window)
+    buttonSignUp.config(relief=tk.FLAT, font=("Arial", 10, "underline"), text="Sign Up", fg="#FFFFFF", bg="#C86F70")
+    buttonSignUp.bind("<Button>", signUp)
     buttonSignUp.place(x=0, y=0)
 
     window.update()
-    labelSignUp.place(x=(256-(labelSignUp.winfo_width()-buttonSignUp.winfo_width())/2), y=528)
-    buttonSignUp.place(x=(256-(labelSignUp.winfo_width()-buttonSignUp.winfo_width())/2+labelSignUp.winfo_width()), y=524)
-
-def load():
-    loadWindow()
+    labelSignUp.place(x=(512-labelSignUp.winfo_width()-buttonSignUp.winfo_width())/2, y=576-32-16)
+    buttonSignUp.place(x=(512-labelSignUp.winfo_width()-buttonSignUp.winfo_width())/2+labelSignUp.winfo_width(), y=576-32-16-4)
 
 def main():
-    load()
-
     global window
+    load()
     window.mainloop()
 
 if __name__ == "__main__":

@@ -15,10 +15,24 @@ class mySQLAccount:
 
 logInFormAccount = mySQLAccount("LogInForm", "8NtJ.Js)AIA1Q@IL")
 
-logInFormAccount.execute("CREATE Database IF NOT EXISTS account")
+logInFormAccount.execute("CREATE DATABASE IF NOT EXISTS account")
 logInFormAccount.execute("SHOW DATABASES")
 
 for database in logInFormAccount.cursor:
     print(database)
 
-logInFormAccount.execute
+logInFormAccount.execute("USE account")
+logInFormAccount.execute("CREATE TABLE IF NOT EXISTS user (name VARCHAR(255), password VARCHAR(255))")
+
+insertAccount = "INSERT INTO user (name, password) VALUES (%s, %s)"
+account = ("admin1", "admin2")
+
+logInFormAccount.cursor.execute(insertAccount, account)
+logInFormAccount.database.commit()
+print(logInFormAccount.cursor.rowcount, "record inserted.")
+
+logInFormAccount.execute("SELECT * FROM user WHERE name = 'Roblox'")
+result = logInFormAccount.cursor.fetchall()
+
+for s in result:
+    print(s)
