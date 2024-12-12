@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 
+
+
 def entryUsernameEvent(event):
     global entryUsername
 
@@ -56,7 +58,7 @@ def signInFailed(message, showIncorrects):
 
 noOfIncorrects = 0 # Tracks incorrect attempts
 def signIn(event):
-    global uanme, pword, noOfIncorrects, entryUsername, entryPassword
+    global uname, pword, noOfIncorrects, entryUsername, entryPassword
 
     username = entryUsername.get()
     password = entryPassword.get()
