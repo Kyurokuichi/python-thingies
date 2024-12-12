@@ -5,22 +5,24 @@ from tkinter import *
 from tkinter import messagebox
 
 
-# SQL Function for initializing the MySQL Database and its cursor
+# SQL Function for initializing the MySQL Database and its Cursor
 def loadDatabase():
     global database, cursor
-
+    # Connect to MySQL Database
     database = connector.connect(
         host = "localhost",
         user = "LogInForm",
         passwd = "8NtJ.Js)AIA1Q@IL",
     )
-
+    # G
     cursor = database.cursor()
     cursor.execute("CREATE DATABASE IF NOT EXISTS account")
     cursor.execute("USE account")
     cursor.execute("CREATE TABLE IF NOT EXISTS user (name VARCHAR(255), password VARCHAR(255))")
 
+# SQL Function for validating the user info from MySQL Database
 def checkAccount(username, password):
+    # Check if one or both the entries are empty
     if username.strip() == "Username" and password.strip() == "Password":
         return "Both Username and Password is empty."
     elif username.strip() == "Username":
@@ -28,6 +30,7 @@ def checkAccount(username, password):
     elif password.strip() == "Password":
         return "Password is empty."
 
+    # Filter and Retrieve accounts from database
     filterAccounts = "SELECT * FROM user WHERE name = %s OR password = %s"
     cursor.execute(filterAccounts, (username, password,))
 
